@@ -1,9 +1,16 @@
 from flask import Flask, json
 from flask_cors import CORS
 
-APP = Flask(__name__)
+
+APP = Flask(
+    __name__,
+    static_url_path='',
+    static_folder='static'
+)
 
 CORS_OBJ = CORS(APP, resources={r"/api/*": {"origins": "*"}})
+
+DOOR_ID = 497079449313791
 
 DATA = {
     5823647720: "7c91befe-4ac4-49ae-a867-228383ee8fd8",
@@ -35,14 +42,15 @@ def api_visitors():
     return json.jsonify(
         status="success",
         data={
+            "door_id": DOOR_ID,
             "visitor_keys": list(DATA.keys()),
         },
         message=None
     )
 
 
-@APP.route("/api/visitors/<int:visitor_key>")
-def api_visitors_key(visitor_key):
+@APP.route("/api/visitors/<int:door_id>/<int:visitor_key>/")
+def api_visitors_key(door_id, visitor_key):
     try:
         return json.jsonify(
             status="success",

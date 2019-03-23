@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Smart Lock | Homeowner | Visitors</title>
+    <link href="style.css" rel="stylesheet">
+  </head>
+  <body>
+    <h1>Smart Lock Visitor View</h1>
+    <p>
+      This is an example of what the visitor component view will look for the
+      homeowner.
+      When the user wished to send a visitor code out, they can click on the
+      relevant code and it will be copied to their clipboard.
+    </p>
+    <h2>Visitors</h2>
+    <ul id="container-visitors"></ul>
+    <script>
+      const visitors = document.getElementById('container-visitors');
+
+      fetch('http://127.0.0.1:8080/api/visitors')
+        .then(response => response.json())
+        .then(data => {
+          let door_id = data['data']['door_id'];
+          let visitor_keys = data['data']['visitor_keys'];
+
+          visitor_keys.forEach((key) => {
+            let label = document.createElement('li');
+            label.appendChild(document.createTextNode(key));
+            label.addEventListener('click', () => {
+              // Write a string to the clipboard
+              navigator.clipboard.writeText('127.0.0.1:8080/visitor.html?door=' + door_id + '&visitor=' + key)
+                .then(
+                  () => { window.alert('Visitor URL copied to clipboard'); },
+                  () => { window.alert('Failed copying URL to clipboard!'); });
+            });
+            visitors.appendChild(label);
+          });
+        });
+    </script>
+  </body>
+</html>
