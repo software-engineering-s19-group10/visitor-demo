@@ -1,0 +1,44 @@
+#visitor-list {
+  list-style-type: none;
+
+  padding-left: 0;
+}
+
+
+#visitor-list li ul {
+  display: flex;
+
+  flex-direction: row;
+
+  list-style-type: none;
+
+  padding: 5px;
+
+  cursor: pointer;
+}
+
+
+#visitor-list li.visitor:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+#visitor-list li.visitor:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+
+#visitor-list li ul li {
+  padding: 5px;
+}
+
+
+#visitor-list li ul li:first-child {
+  font-weight: bold;
+}
+
+@media (orientation: portrait) {
+  #visitor-list li ul {
+    padding: 12px;
+  }
+}

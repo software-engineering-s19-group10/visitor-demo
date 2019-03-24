@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Smart Lock | Visitor Authentication</title>
-    <link href="style.css" rel="stylesheet">
-    <link href="visitor.css" rel="stylesheet">
-    <script src="./VanillaQR.js"></script>
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/visitor.css" rel="stylesheet">
+    <script src="/js/VanillaQR.js"></script>
   </head>
   <body>
     <h1>Smart Lock Visitor Code</h1>
@@ -16,15 +16,6 @@
     </p>
     <div id="container"></div>
     <script>
-      const root_element = document.documentElement;
-
-      console.log(root_element);
-
-      const foreground_color = document.documentElement.style.color
-            background_color = document.documentElement.style.backgroundColor;
-
-      console.log('fore: ' + foreground_color + ' back: ' + background_color);
-
       const code_container = document.getElementById('container');
 
       const params = new URLSearchParams(window.location.search);
@@ -38,8 +29,8 @@
           let qr = new VanillaQR({
             url: unlock_key,
             size: 300,
-            colorLight: foreground_color,
-            colorDark: background_color
+            colorLight: "#D7D7D7",
+            colorDark: "#292933"
           });
           code_container.append(qr.domElement);
 

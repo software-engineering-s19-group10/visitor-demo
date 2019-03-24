@@ -21,6 +21,15 @@ DATA = {
     1909294305: "71084cf9-4e42-4055-b952-f9017efac359",
 }
 
+DATA_NAMES = {
+    5823647720: "Alice",
+    5790323022: "Bob",
+    4286357830: "Catrina",
+    8639881096: "Destiny",
+    3899201564: "Edgar H.",
+    1909294305: "Fred",
+}
+
 HELP = """<h1>Test API Help</h1>
 <p>Below is a description of the provided test APIs/</p>
 <dl>
@@ -34,16 +43,21 @@ HELP = """<h1>Test API Help</h1>
 
 @APP.route("/api/")
 def api_index():
+    """ Return a page defining available API calls. """
     return HELP
 
 
-@APP.route("/api/visitors")
+@APP.route("/api/visitors/")
 def api_visitors():
+    """ API call for homeowners to get a list of visitors. """
     return json.jsonify(
         status="success",
         data={
             "door_id": DOOR_ID,
-            "visitor_keys": list(DATA.keys()),
+            "visitor_keys": {
+                key: name
+                for key, name in DATA_NAMES.items()
+            },
         },
         message=None
     )
@@ -51,6 +65,7 @@ def api_visitors():
 
 @APP.route("/api/visitors/<int:door_id>/<int:visitor_key>/")
 def api_visitors_key(door_id, visitor_key):
+    """ API call for visitor to get an unlock key. """
     try:
         return json.jsonify(
             status="success",
@@ -63,7 +78,7 @@ def api_visitors_key(door_id, visitor_key):
         return json.jsonify(
             status="fail",
             data=None,
-            message="Invalid visitor key was requested"
+            message="Invalid visitor key was requested!"
         )
 
 
