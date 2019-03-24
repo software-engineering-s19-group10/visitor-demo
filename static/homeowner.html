@@ -16,51 +16,10 @@
       relevant code and it will be copied to their clipboard.
     </p>
     <h2>Visitors</h2>
+    <input id="visitor-name" type="text" name="name">
+    <input id="visitor-add" type="button" name="submit" value="Add Visitor">
+    <input id="visitor-clear" type="button" name="clear" value="Clear">
     <ul id="visitor-list"></ul>
-    <script>
-      const createVisitor = function(...details) {
-        const visitor = document.createElement('li');
-
-        visitor.classList.add('visitor');
-
-        const visitor_details = document.createElement('ul');
-
-        for (let i = 0; i < details.length; i++) {
-          const label = document.createElement('li');
-          label.appendChild(document.createTextNode(details[i]));
-          visitor_details.appendChild(label);
-        }
-
-        visitor.append(visitor_details);
-
-        return visitor;
-      }
-
-      const visitors = document.createElement('ul');
-      visitors.setAttribute('id', 'visitor-list');
-
-      fetch('http://127.0.0.1:8080/api/visitors')
-        .then(response => response.json())
-        .then(data => {
-          const door_id = data['data']['door_id'];
-          const visitor_keys = data['data']['visitor_keys'];
-
-          for (let key in visitor_keys) {
-            const visitor = createVisitor(visitor_keys[key], key);
-
-            visitor.addEventListener('click', () => {
-              // Write a string to the clipboard
-              navigator.clipboard.writeText('127.0.0.1:8080/visitor.html?door=' + door_id + '&visitor=' + key)
-                .then(
-                  () => { window.alert('Visitor URL copied to clipboard'); },
-                  () => { window.alert('Failed copying URL to clipboard!'); });
-            });
-
-            visitors.appendChild(visitor);
-          };
-        });
-
-      document.body.appendChild(visitors);
-    </script>
+    <script src="/js/homeowner.js"></script>
   </body>
 </html>
