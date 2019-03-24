@@ -1,7 +1,6 @@
 import collections
 import random
 import string
-import sys
 import uuid
 
 from flask import Flask, json, request
@@ -72,8 +71,6 @@ def api_visitors():
 def api_visitors_post():
     post_data = json.loads(request.data.decode("utf-8"))
 
-    print(request.data, file=sys.stderr)
-
     try:
         name = post_data["name"]
         if not name:
@@ -105,7 +102,6 @@ def api_visitors_post():
 @APP.route("/api/visitors/del/", methods=["DELETE"])
 def api_visitors_delete():
     request_data = json.loads(request.data.decode("utf-8"))
-    print(request_data, file=sys.stderr)
 
     try:
         visitor_id = request_data["visitor_id"]

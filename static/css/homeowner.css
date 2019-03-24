@@ -12,7 +12,8 @@
 }
 
 
-#visitor-list li button {
+#visitor-list li div button {
+  cursor: pointer;
 }
 
 
@@ -24,8 +25,6 @@
   list-style-type: none;
 
   padding: 5px;
-
-  cursor: pointer;
 }
 
 
@@ -48,8 +47,41 @@
   font-weight: bold;
 }
 
+
+#visitor-input {
+  display: flex;
+}
+
+#visitor-name {
+  margin: 0 5px;
+}
+
 @media (orientation: portrait) {
+  #visitor-list li {
+    flex-direction: column;
+  }
+
+  #visitor-list li div {
+    display: flex;
+
+    justify-content: space-evenly;
+  }
+
+  #visitor-list li div button {
+    flex-grow: 1;
+  }
+
   #visitor-list li ul {
     padding: 12px;
+  }
+
+  #visitor-input {
+    flex-direction: column;
+  }
+
+  #visitor-input div {
+    display: flex;
+
+    justify-content: center;
   }
 }
