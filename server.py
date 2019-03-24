@@ -68,8 +68,8 @@ def api_visitors():
     )
 
 
-@APP.route("/api/visitors/new/", methods=["GET", "POST"])
-def api_visitor_post():
+@APP.route("/api/visitors/new/", methods=["POST"])
+def api_visitors_post():
     post_data = json.loads(request.data.decode("utf-8"))
 
     print(request.data, file=sys.stderr)
@@ -102,20 +102,49 @@ def api_visitor_post():
         message=None
     )
 
+@APP.route("/api/visitors/del/", methods=["DELETE"])
+def api_visitors_delete():
+    request_data = json.loads(request.data.decode("utf-8"))
+    print(request_data, file=sys.stderr)
 
-@APP.route("/api/visitors/<string:door_id>/<string:visitor_key>/")
-def api_visitors_key(door_id, visitor_key):
+    try:
+        visitor_id = request_data["visitor_id"]
+    except KeyError:
+        return json.jsonify(
+            status="failure",
+            data=None,
+            message="Invalid payload was provided"
+        )
+
+    try:
+        del DATA[visitor_id]
+    except KeyError:
+        return json.jsonify(
+            status="failure",
+            data=None,
+            message="Invalid visitor key was provided"
+        )
+
+    return json.jsonify(
+        status="success",
+        data=None,
+        message="Successfully removed visitor {}".format(visitor_id)
+    )
+
+
+
+@APP.route("/api/visitors/<string:door_id>/<string:visitor_id>/")
+def api_visitors_get(door_id, visitor_id):
     """ API call for visitor to get an unlock key. """
     try:
         return json.jsonify(
             status="success",
             data={
-                "unlock_key": DATA[visitor_key].unlock_code,
+                "unlock_key": DATA[visitor_id].unlock_code,
             },
             message=None
         )
     except KeyError:
-        print(DATA[visitor_key])
         return json.jsonify(
             status="failure",
             data=None,

@@ -5,6 +5,17 @@
 }
 
 
+#visitor-list li {
+  display: flex;
+
+  justify-content: space-between;
+}
+
+
+#visitor-list li button {
+}
+
+
 #visitor-list li ul {
   display: flex;
 
